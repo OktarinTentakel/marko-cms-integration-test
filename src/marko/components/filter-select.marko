@@ -1,0 +1,36 @@
+/*
+ * FILTER COMPONENT
+ */
+
+
+
+select.filter name=input.filter.name on-change('triggerUpdate')
+	option value="" -- ${ input.filter.placeholder }
+	for(option in input.filter.options)
+		option value=option.value -- ${ option.text }
+
+
+
+class {
+	onCreate(input){
+		this.app = input.app;
+		this.parent = input.parent;
+
+		this.state = {};
+
+		this.value = '';
+	}
+
+	onMount(){
+		M.FormSelect.init(this.el, {});
+	}
+
+	triggerUpdate(e){
+		this.value = e.target.value;
+
+		this.parent.emit('filter-changed', {
+			name : this.input.filter.name,
+			value : this.value
+		});
+	}
+}

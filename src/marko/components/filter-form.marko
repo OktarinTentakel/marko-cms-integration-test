@@ -1,0 +1,33 @@
+/*
+ * ~FILTER FORM COMPONENT~
+ */
+
+
+
+form.filter-form
+	for(filter in input.filters)
+		filter-select app=component.app parent=component filter=filter
+
+
+
+class {
+	onCreate(input){
+		this.app = input.app;
+
+		this.state = {
+			filterValues : {}
+		};
+	}
+
+	onMount(){
+		this.on('filter-changed', (payload) => {
+			if( !payload.value ){
+				delete this.state.filterValues[payload.name];
+			} else {
+				this.state.filterValues[payload.name] = payload.value;
+			}
+
+			this.app.emit('filters-changed', {filters : this.state.filterValues});
+		});
+	}
+}

@@ -1,0 +1,46 @@
+/*
+ * ~DOWNLOAD LIST~
+ */
+
+import _ from 'lodash';
+
+
+
+div.download-list
+	download for(download in state.currentDownloads) app=component.app download=download
+
+
+
+class {
+	onCreate(input){
+		this.app = input.app;
+
+		this.state = {
+			currentDownloads : JSON.parse(JSON.stringify(input.downloads))
+		};
+	}
+
+	onMount(){
+		this.subscribeTo(this.app).on('filters-changed', (payload) => {
+			let filters = payload.filters;
+
+            this.state.currentDownloads = _.filter(this.input.downloads, function(download){
+                let res = true;
+
+                _.each(filters, (filterValue, filterName) => {
+                    if(
+                        !download.filterAttributes
+                        || !download.filterAttributes[filterName]
+                        || (!download.filterAttributes[filterName].value && !_.isArray(download.filterAttributes[filterName].values))
+                        || ((filterValue !== download.filterAttributes[filterName].value) && !_.includes(download.filterAttributes[filterName].values, filterValue))
+                    ){
+                        res = false;
+                        return false;
+                    }
+                });
+
+                return res;
+            });
+		});
+	}
+}

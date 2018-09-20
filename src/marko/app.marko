@@ -1,0 +1,17 @@
+/*
+ *	~APP~
+ */
+
+
+
+main#app
+	filter-form app=component filters=state.filters
+	download-list app=component downloads=state.downloads
+
+
+
+class {
+	onCreate(){
+		this.state = window.MODEL;
+	}
+}

@@ -1,0 +1,25 @@
+/*
+ * ~DOWNLOAD COMPONENT~
+ */
+
+
+
+a.download href=input.download.url target="_blank"
+	picture.image
+		source srcset=input.download.image.sources.desktop media="(min-width: 1024px)"
+		source srcset=input.download.image.sources.tablet media="(min-width: 768px)"
+		<img
+			srcset=input.download.image.sources.mobile
+			src=input.download.image.sources.mobile
+			alt=input.download.image.alt
+		/>
+	span.subheadline -- ${ input.download.subheadline }
+	span.headline -- ${ input.download.headline }
+
+
+
+class {
+	onCreate(input){
+		this.app = input.app;
+	}
+}
